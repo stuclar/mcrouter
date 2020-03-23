@@ -40,3 +40,15 @@
           folly::to<std::string>("Invalid router name: ", (routerName))); \
     }                                                                     \
   } while (false);
+
+#define CALL_BY_ROUTER_NAME_THRIFT(routerName, func, ...)                 \
+  do {                                                                    \
+    if ((routerName) == facebook::memcache::MemcacheRouterInfo::name) {   \
+      func<                                                               \
+          facebook::memcache::MemcacheRouterInfo,                         \
+          facebook::memcache::MemcacheRequestHandler>(__VA_ARGS__);       \
+    } else {                                                              \
+      throw std::invalid_argument(                                        \
+          folly::to<std::string>("Invalid router name: ", (routerName))); \
+    }                                                                     \
+  } while (false);

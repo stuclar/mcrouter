@@ -82,7 +82,7 @@ libmcroutercore_a_SOURCES = \
   ProxyDestination.h \
   ProxyDestinationBase.cpp \
   ProxyDestinationBase.h \
-	ProxyDestinationKey.cpp \
+  ProxyDestinationKey.cpp \
   ProxyDestinationKey.h \
   ProxyDestinationMap-inl.h \
   ProxyDestinationMap.cpp \
@@ -195,6 +195,8 @@ libmcroutercore_a_SOURCES = \
   stats.h \
   ThreadUtil.cpp \
   ThreadUtil.h \
+  ThriftAcceptors.h \
+  ThriftAcceptors.cpp \
   TkoCounters.h \
   TkoLog.cpp \
   TkoLog.h \
