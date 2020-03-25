@@ -195,7 +195,7 @@ libmcroutercore_a_SOURCES = \
   stats.h \
   ThreadUtil.cpp \
   ThreadUtil.h \
-  ThriftAcceptors.h \
+  ThriftAcceptor.h \
   ThriftAcceptor.cpp \
   TkoCounters.h \
   TkoLog.cpp \
