@@ -29,7 +29,6 @@ AC_CONFIG_LINKS([RouterRegistry.h:RouterRegistry-impl.h])
 AC_CONFIG_LINKS([ThriftAcceptor.h:ThriftAcceptor-impl.h])
 AC_CONFIG_AUX_DIR([build-aux])
 
-
 AM_INIT_AUTOMAKE([1.14 foreign dist-bzip2 nostdinc subdir-objects parallel-tests])
 
 AC_CONFIG_MACRO_DIR([m4])
