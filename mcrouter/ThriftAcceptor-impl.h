@@ -10,7 +10,6 @@
 #include <memory>
 #include <utility>
 
-#include <common/services/cpp/security/FizzAcceptor.h>
 #include <wangle/acceptor/Acceptor.h>
 
 namespace folly {
@@ -27,7 +26,7 @@ namespace facebook {
 namespace memcache {
 
 class ThriftAcceptorFactory final
-    : public facebook::services::FizzAcceptorFactory {
+    : public wangle::AcceptorFactory {
   using ThriftAclCheckerFunc =
       std::function<bool(const folly::AsyncTransportWrapper*)>;
 
@@ -36,8 +35,7 @@ class ThriftAcceptorFactory final
       apache::thrift::ThriftServer& server,
       ThriftAclCheckerFunc aclChecker,
       int trafficClass = 0)
-      : facebook::services::FizzAcceptorFactory(&server),
-        server_(server),
+      : server_(server),
         aclChecker_(aclChecker),
         trafficClass_(trafficClass) {}
   ~ThriftAcceptorFactory() override = default;
