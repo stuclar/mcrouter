@@ -25,27 +25,22 @@ class ThriftServer;
 namespace facebook {
 namespace memcache {
 
-class ThriftAcceptorFactory final
-    : public wangle::AcceptorFactory {
+class ThriftAcceptorFactory final : public wangle::AcceptorFactory {
   using ThriftAclCheckerFunc =
       std::function<bool(const folly::AsyncTransportWrapper*)>;
 
  public:
   explicit ThriftAcceptorFactory(
       apache::thrift::ThriftServer& server,
-      ThriftAclCheckerFunc aclChecker,
-      int trafficClass = 0)
-      : server_(server),
-        aclChecker_(aclChecker),
-        trafficClass_(trafficClass) {}
+      ThriftAclCheckerFunc /* unused */,
+      int trafficClass /* unused */)
+      : server_(server) {}
   ~ThriftAcceptorFactory() override = default;
 
   std::shared_ptr<wangle::Acceptor> newAcceptor(folly::EventBase* evb) override;
 
  private:
   apache::thrift::ThriftServer& server_;
-  ThriftAclCheckerFunc aclChecker_;
-  int trafficClass_;
 };
 
 } // namespace memcache

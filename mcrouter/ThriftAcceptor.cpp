@@ -31,24 +31,16 @@ namespace memcache {
 std::shared_ptr<wangle::Acceptor> ThriftAcceptorFactory::newAcceptor(
     folly::EventBase* evb) {
   class ThriftAcceptor : public apache::thrift::Cpp2Worker {
-    using ThriftAclCheckerFunc = ThriftAcceptorFactory::ThriftAclCheckerFunc;
-
    public:
-    ThriftAcceptor(
-        apache::thrift::ThriftServer& server,
-        folly::EventBase* evb,
-        ThriftAclCheckerFunc aclChecker)
+    ThriftAcceptor(apache::thrift::ThriftServer& server, folly::EventBase* evb)
         : apache::thrift::Cpp2Worker(&server, {}) {
       construct(&server, nullptr, evb);
     }
 
     static std::shared_ptr<ThriftAcceptor> create(
         apache::thrift::ThriftServer& server,
-        folly::EventBase* evb,
-        ThriftAclCheckerFunc aclChecker,
-        int trafficClass = 0) {
-      auto self = std::make_shared<ThriftAcceptor>(
-          server, evb, aclChecker, trafficClass);
+        folly::EventBase* evb) {
+      auto self = std::make_shared<ThriftAcceptor>(server, evb);
       self->construct(&server, nullptr, evb);
       return self;
     }
@@ -74,20 +66,11 @@ std::shared_ptr<wangle::Acceptor> ThriftAcceptorFactory::newAcceptor(
       auto* asyncSocket = socket->getUnderlyingTransport<folly::AsyncSocket>();
       asyncSocket->setNoDelay(true);
       asyncSocket->setSendTimeout(0);
-      if (trafficClass_ &&
-          asyncSocket->setSockOpt(IPPROTO_IPV6, IPV6_TCLASS, &trafficClass_) !=
-              0) {
-        LOG_EVERY_N(ERROR, 5000)
-            << "Failed to set TCLASS = " << trafficClass_ << " on socket";
-      }
       apache::thrift::Cpp2Worker::onNewConnection(
           std::move(socket), address, "", secureTransportType, transportInfo);
     }
-
-   private:
-    ThriftAclCheckerFunc aclChecker_;
   };
-  return ThriftAcceptor::create(server_, evb, aclChecker_, trafficClass_);
+  return ThriftAcceptor::create(server_, evb);
 }
 
 } // namespace memcache
