@@ -60,6 +60,7 @@ libmcroutercore_a_SOURCES = \
   McrouterLogger.h \
   McrouterManager.cpp\
   McrouterManager.h\
+  McCallbackUtils.h \
   Observable-inl.h \
   Observable.h \
   options-template.h \
