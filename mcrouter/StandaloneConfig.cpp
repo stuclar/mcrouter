@@ -39,12 +39,6 @@ std::function<bool(const folly::AsyncTransportWrapper*)>
 getThriftConnectionAclChecker(
     const std::string& /* serviceIdentity */,
     bool /* enforce */) {
-  return [](McServerSession&) { return true; };
-}
-std::function<bool(const folly::AsyncTransportWrapper*)>
-getThriftConnectionAclChecker(
-    const std::string& /* serviceIdentity */,
-    bool /* enforce */) {
   return [](const folly::AsyncTransportWrapper*) { return true; };
 }
 
