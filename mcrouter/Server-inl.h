@@ -415,7 +415,7 @@ bool runServerDual(
 
     // Register signal handler which will handle ordered shutdown process of the
     // two servers
-    ShutdownSignalHandler<RouterInfo> shutdownHandler<RouterInfo>(
+    ShutdownSignalHandler<RouterInfo> shutdownHandler(
         evb, thriftServer, asyncMcServer, router);
     shutdownHandler.registerSignalHandler(SIGTERM);
     shutdownHandler.registerSignalHandler(SIGINT);
